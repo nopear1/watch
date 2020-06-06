@@ -1,0 +1,8 @@
+speaker.c:20:6:SpeakerInit	8	static
+speaker.c:31:6:OneLineSendData	24	static
+speaker.c:66:6:PlayVoice1	16	static
+speaker.c:84:6:PlayVoice	16	static
+speaker.c:100:6:SetVolume	16	static
+speaker.c:130:6:PlayVoiceOnce	16	static
+speaker.c:146:6:PlayVoiceContinuous	16	static
+speaker.c:157:6:PlayVoice5TimesPer10min	16	static

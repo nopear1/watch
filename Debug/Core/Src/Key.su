@@ -1,0 +1,9 @@
+Key.c:57:9:ReadAebBtn	8	static
+Key.c:62:9:ReadVolumeBtn	8	static
+Key.c:68:9:ReadRevBtn	8	static
+Key.c:79:6:AebCb	16	static
+Key.c:112:6:VolCb	24	static
+Key.c:138:6:KeyInit	4	static
+Key.c:174:6:ScanOneKey1	16	static
+Key.c:233:6:ScanOneKey	16	static
+Key.c:283:6:ScanKey	8	static

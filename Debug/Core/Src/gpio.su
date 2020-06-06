@@ -1,0 +1,4 @@
+gpio.c:43:6:MX_GPIO_Init	40	static
+gpio.c:119:9:GetHardwareType	8	static
+gpio.c:140:6:SetLedRed	16	static
+gpio.c:172:6:SetLedGreen	16	static

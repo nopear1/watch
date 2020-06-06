@@ -1,0 +1,13 @@
+led.c:11:6:LedDisplay	16	static
+led.c:128:6:LedLoop	16	static
+led.c:145:7:LeftLineOn	4	static
+led.c:155:6:LeftLineOff	4	static
+led.c:165:6:SetLeftLine	16	static
+led.c:192:6:SetRightLine	16	static
+led.c:219:6:SetCar	16	static
+led.c:246:6:SetPeople	16	static
+led.c:273:6:SetPoint	16	static
+led.c:300:6:SetAeb	16	static
+led.c:326:6:SetFault	16	static
+led.c:353:6:SetDigitalNumLeft	16	static
+led.c:415:6:SetDigitalNumRight	16	static
