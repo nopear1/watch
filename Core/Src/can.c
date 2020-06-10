@@ -45,21 +45,23 @@ void SetAebState(uint8_t state)
 	memset(&watchTx, 0, sizeof(watchTx));
 	watchTx.aebState = state;
 	watchTx.hardwareType = hardware;
-	do
-	{
-		CanTxMessage(CAN_ID_STD, 0x11F, 8, (uint8_t*) &watchTx);
-		HAL_Delay(500);
-		canTxCnt++;
-		/*连发5�??*/
-		if (canTxCnt > 5)
-		{
-			canTxCnt = 0;
-			break;
-		}
-	} while ((msg11d.flg == 0)&&(msg11c.flg == 0));
-	msg11d.flg =0;
-	msg11c.flg =0;
+//	do
+//	{
+//		CanTxMessage(CAN_ID_STD, 0x11F, 8, (uint8_t*) &watchTx);
+//		HAL_Delay(100);
+//		canTxCnt++;
+//		/*连发5�?????*/
+//		if (canTxCnt > 5)
+//		{
+//			canTxCnt = 0;
+//			break;
+//		}
+//	} while ((msg11d.flg == 0)&&(msg11c.flg == 0));
+//	msg11d.flg =0;
+//	msg11c.flg =0;
 
+	CanTxMessage(CAN_ID_STD, 0x11F, 8, (uint8_t*) &watchTx);
+//	HAL_Delay(100);
 }
 
 /* USER CODE END 0 */
@@ -155,15 +157,15 @@ void HAL_CAN_MspDeInit(CAN_HandleTypeDef* canHandle)
 /* CAN filter config function */
 /***********************************
  * Brief:设置CAN滤波设置
- * Argument:�??
- * Return:�??
+ * Argument:�?????
+ * Return:�?????
  ************************************/
 void CanFilterConfigScale16IdList(void)
 {
 
 	uint32_t stdIdBsd = 0x11B;
-	uint32_t stdIdBsdAck = 0x11C;
-	uint32_t stdIdAebAck = 0x11D;
+	uint32_t stdIdBsdAck = 0;
+	uint32_t stdIdAebAck = 0;
 	uint32_t stdIdAeb = 0x11E;
 	CAN_FilterTypeDef sFilterCfg;
 	sFilterCfg.FilterScale = CAN_FILTERSCALE_16BIT;
@@ -192,8 +194,8 @@ void CanFilterConfigScale16IdList(void)
 
 /***********************************
  * Brief:CAN发�??
- * Argument:@ide：标准帧还是扩展�??? @id  canid  @len长度 @data数据
- * Return:0：发送成�??   1：发送失�??
+ * Argument:@ide：标准帧还是扩展�?????? @id  canid  @len长度 @data数据
+ * Return:0：发送成�?????   1：发送失�?????
  ************************************/
 uint8_t CanTxMessage(uint8_t ide, uint32_t id, uint8_t len, uint8_t *data)
 {
@@ -209,7 +211,7 @@ uint8_t CanTxMessage(uint8_t ide, uint32_t id, uint8_t len, uint8_t *data)
 	while (HAL_CAN_GetTxMailboxesFreeLevel(&hcan) == 0)
 	{
 		i++;
-		if (i > 0xfffe)
+		if (i > 0xff)
 			return 1;
 	}
 //	HAL_Delay(500);
@@ -223,7 +225,7 @@ uint8_t CanTxMessage(uint8_t ide, uint32_t id, uint8_t len, uint8_t *data)
 /***********************************
  * Brief:CAN中断回调
  * Argument:@hcan can句柄
- * Return:�??
+ * Return:�?????
  ************************************/
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 {
@@ -233,24 +235,24 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 	HAL_Retval = HAL_CAN_GetRxMessage(hcan, CAN_RX_FIFO0, &CAN_RxHeader, RxBuf);
 	if (HAL_Retval == HAL_OK)
 	{
-		if (CAN_RxHeader.StdId == 0x11d)
-		{
-			msg11d.flg = 1;
-			memcpy(msg11d.data, RxBuf, 8);
-			memset(RxBuf, 0, 8);
-		}
+//		if (CAN_RxHeader.StdId == 0x11d)
+//		{
+//			msg11d.flg = 1;
+//			memcpy(msg11d.data, RxBuf, 8);
+//			memset(RxBuf, 0, 8);
+//		}
 		if (CAN_RxHeader.StdId == 0x11b)
 		{
 			msg11b.flg = 1;
 			memcpy(msg11b.data, RxBuf, 8);
 			memset(RxBuf, 0, 8);
 		}
-		if (CAN_RxHeader.StdId == 0x11c)
-		{
-			msg11c.flg = 1;
-			memcpy(msg11c.data, RxBuf, 8);
-			memset(RxBuf, 0, 8);
-		}
+//		if (CAN_RxHeader.StdId == 0x11c)
+//		{
+//			msg11c.flg = 1;
+//			memcpy(msg11c.data, RxBuf, 8);
+//			memset(RxBuf, 0, 8);
+//		}
 		if (CAN_RxHeader.StdId == 0x11e)
 		{
 			msg11e.flg = 1;
@@ -262,8 +264,8 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 
 /***********************************
  * Brief:CAN数据解析
- * Argument:�??
- * Return:�??
+ * Argument:�?????
+ * Return:�?????
  ************************************/
 void CanDataAnalisys(void)
 {
@@ -271,7 +273,7 @@ void CanDataAnalisys(void)
 //	if (msg11d.flg == 1)
 //	{
 //		watchRx = *(WatchMsg_t*) (msg11d.data);
-//		/*发�?�和接收到的�??�??*/
+//		/*发�?�和接收到的�?????�?????*/
 //		if (watchRx.aebState == watchTx.aebState)
 //		{
 //			if (watchRx.aebState == AEB_ON)
@@ -289,7 +291,7 @@ void CanDataAnalisys(void)
 //	 if (msg11c.flg == 1)
 //	{
 //		watchRx = *(WatchMsg_t*) (msg11c.data);
-//		/*发�?�和接收到的�??�??*/
+//		/*发�?�和接收到的�?????�?????*/
 //		if (watchRx.bsdState == watchTx.bsdState)
 //		{
 ////	  PlayVoice (SP_BSD_ON);
@@ -300,17 +302,9 @@ void CanDataAnalisys(void)
 	if (msg11e.flg == 1)
 	{
 		aeb = *(AebMsg_t*) (msg11e.data);
-		/*先解析语�??*/
+		/*先解析语�?????*/
 		if (aeb.voice != 0)
 		{
-//			if (aeb.voice == SP_FAULTCODE)
-//			{
-//				PlayVoice5TimesPer10min(SP_FAULTCODE);
-//			}
-//			else
-//			{
-//				PlayVoiceOnce(aeb.voice);
-//			}
 			PlayVoice(aeb.voice);
 		}
 		/*如果是报警器*/
@@ -323,7 +317,7 @@ void CanDataAnalisys(void)
 			}
 			else
 			{
-				/*熄灭操作，需要确认bsd没有点亮的情况下去操�??*/
+				/*熄灭操作，需要确认bsd没有点亮的情况下去操�?????*/
 				if (bsd.ledRed == 0)
 				{
 					SetLedRed(aeb.ledRed);
@@ -336,7 +330,7 @@ void CanDataAnalisys(void)
 			}
 			else
 			{
-				/*熄灭操作，需要确认bsd没有点亮的情况下去操�??*/
+				/*熄灭操作，需要确认bsd没有点亮的情况下去操�?????*/
 				if (bsd.ledGreen == 0)
 				{
 					SetLedGreen(aeb.ledGreen);
@@ -350,6 +344,8 @@ void CanDataAnalisys(void)
 			SetLeftLine(aeb.leftLine);
 			/*解析右车道线*/
 			SetRightLine(aeb.rightLine);
+			/*解析aeb灯*/
+			SetAeb(aeb.aebState);
 			/*点亮操作不受限制*/
 			if (aeb.car != 0)
 			{
@@ -357,12 +353,25 @@ void CanDataAnalisys(void)
 			}
 			else
 			{
-				/*熄灭操作，需要确认bsd没有点亮的情况下去操�??*/
+				/*熄灭操作，需要确认bsd没有点亮的情况下去操�?????*/
 				if (bsd.car == 0)
 				{
 					SetCar(aeb.car);
 				}
 			}
+			/*点亮操作不受限制*/
+						if (aeb.fault != 0)
+						{
+							SetFault(aeb.fault);
+						}
+						else
+						{
+							/*熄灭操作，需要确认bsd没有点亮的情况下去操�?????*/
+							if (bsd.fault == 0)
+							{
+								SetFault(aeb.fault);
+							}
+						}
 			/*点亮操作不受限制*/
 			if (aeb.people != 0)
 			{
@@ -370,7 +379,7 @@ void CanDataAnalisys(void)
 			}
 			else
 			{
-				/*熄灭操作，需要确认bsd没有点亮的情况下去操�??*/
+				/*熄灭操作，需要确认bsd没有点亮的情况下去操�?????*/
 				if (bsd.people == 0)
 				{
 					SetPeople(aeb.people);
@@ -383,7 +392,7 @@ void CanDataAnalisys(void)
 			}
 			else
 			{
-				/*熄灭操作，需要确认bsd没有点亮的情况下去操�??*/
+				/*熄灭操作，需要确认bsd没有点亮的情况下去操�?????*/
 				if (bsd.point == 0)
 				{
 					SetPoint(aeb.point);
@@ -393,7 +402,12 @@ void CanDataAnalisys(void)
 			if (aeb.digitalState == 1)
 			{
 				SetDigitalNumLeft(aeb.numLeft);
-				SetDigitalNumRight(aeb.digitalState);
+				SetDigitalNumRight(aeb.numRight);
+			}
+			else
+			{
+				led.numLeft=0;
+				led.numRight=0;
 			}
 		}
 		msg11e.flg =0;
@@ -403,19 +417,11 @@ void CanDataAnalisys(void)
 	{
 		bsd = *(BsdMsg_t*) (msg11b.data);
 
-		/*先解析语�??*/
+		/*先解析语�?????*/
 		if (aeb.voice == 0)
 		{
 			if (bsd.voice != 0)
 			{
-//				if (bsd.voice == SP_FAULTCODE)
-//				{
-//					PlayVoice5TimesPer10min(SP_FAULTCODE);
-//				}
-//				else
-//				{
-//					PlayVoiceOnce(bsd.voice);
-//				}
 				PlayVoice(bsd.voice);
 			}
 		}
@@ -440,6 +446,11 @@ void CanDataAnalisys(void)
 				SetCar(bsd.car);
 			}
 
+			if (aeb.fault == 0)
+						{
+				SetFault(bsd.fault);
+						}
+
 			if (aeb.people == 0)
 			{
 				SetPeople(bsd.people);
@@ -453,8 +464,13 @@ void CanDataAnalisys(void)
 			if ((aeb.digitalState == 0) && (bsd.digitalState == 1))
 			{
 				SetDigitalNumLeft(bsd.numLeft);
-				SetDigitalNumRight(bsd.digitalState);
+				SetDigitalNumRight(bsd.numRight);
 			}
+			else
+				{
+					led.numLeft=0;
+					led.numRight=0;
+				}
 		}
 		msg11b.flg =0;
 	}

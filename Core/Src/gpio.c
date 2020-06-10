@@ -19,9 +19,8 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "gpio.h"
-#include "led.h"
 /* USER CODE BEGIN 0 */
-
+#include "led.h"
 /* USER CODE END 0 */
 
 /*----------------------------------------------------------------------------*/
@@ -55,13 +54,10 @@ void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOA, SP_DATA_Pin|LED_RED_Pin|LED_GREEN_Pin|LED_COL16_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(LED_COM1_GPIO_Port, LED_COM1_Pin, GPIO_PIN_RESET);
-
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, LED_COM2_Pin|LED_COL10_Pin|LED_COL11_Pin|LED_COL12_Pin 
-                          |LED_COL13_Pin|LED_COL14_Pin|LED_COL15_Pin|LED_COM3_Pin 
-                          |LED_COM4_Pin|LED_COM5_Pin|LED_COM6_Pin|LED_COM7_Pin 
-                          |LED_COM8_Pin|LED_COL9_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(GPIOB, LED_COM1_Pin|LED_COM2_Pin|LED_COL10_Pin|LED_COL11_Pin 
+                          |LED_COL12_Pin|LED_COL13_Pin|LED_COL14_Pin|LED_COL15_Pin 
+                          |LED_COM3_Pin|LED_COM4_Pin|LED_COM5_Pin|LED_COM6_Pin 
+                          |LED_COM7_Pin|LED_COM8_Pin|LED_COL9_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : PC13 PC14 PC15 */
   GPIO_InitStruct.Pin = GPIO_PIN_13|GPIO_PIN_14|GPIO_PIN_15;
@@ -69,18 +65,12 @@ void MX_GPIO_Init(void)
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PAPin PAPin PAPin PAPin 
-                           PA6 */
-  GPIO_InitStruct.Pin = KEY_VOL_Pin|KEY_AEB_Pin|KEY_RES_Pin|HARDWARE_Pin 
-                          |GPIO_PIN_6;
+                           PAPin PA6 */
+  GPIO_InitStruct.Pin = KEY_VOL_Pin|KEY_AEB_Pin|KEY_RES_Pin|SP_BUSY_Pin 
+                          |HARDWARE_Pin|GPIO_PIN_6;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : PtPin */
-  GPIO_InitStruct.Pin = SP_BUSY_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
-  HAL_GPIO_Init(SP_BUSY_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PAPin PAPin PAPin PAPin */
   GPIO_InitStruct.Pin = SP_DATA_Pin|LED_RED_Pin|LED_GREEN_Pin|LED_COL16_Pin;
@@ -113,13 +103,13 @@ void MX_GPIO_Init(void)
 
 /***********************************
  * Brief:获取硬件类型
- * Argument:�?
- * Return:HW_ALARM�?  报警�?  HW_WATCH：watch
+ * Argument:�???
+ * Return:HW_ALARM�???  报警�???  HW_WATCH：watch
  ************************************/
 uint8_t GetHardwareType(void)
 {
 
-	if(HAL_GPIO_ReadPin(HARDWARE_GPIO_Port, HARDWARE_Pin)==RESET)
+	if(HAL_GPIO_ReadPin(HARDWARE_GPIO_Port, HARDWARE_Pin)==GPIO_PIN_RESET)
 	{
 		return HW_ALARM;
 	}
@@ -134,8 +124,8 @@ uint8_t GetHardwareType(void)
 
 /***********************************
  * Brief:设置红色LED（报警器版）
- * Argument:state�?0：led�?  1：led�?  2：led�?
- * Return:�?
+ * Argument:state�???0：led�???  1：led�???  2：led�???
+ * Return:�???
  ************************************/
 void SetLedRed(uint8_t state)
 {
@@ -152,11 +142,7 @@ void SetLedRed(uint8_t state)
 			{
 			HAL_GPIO_WritePin(LED_RED_GPIO_Port, LED_RED_Pin,GPIO_PIN_SET );
 			}
-//			blinkflag.ledRed=2;
-//			if(GetSysticks()%500==0)
-//			{
-//				HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
-//			}
+
 			break;
 		default:
 			break;
@@ -166,8 +152,8 @@ void SetLedRed(uint8_t state)
 
 /***********************************
  * Brief:设置绿色LED（报警器版）
- * Argument:state�?0：led�?  1：led�?  2：led�?
- * Return:�?
+ * Argument:state�???0：led�???  1：led�???  2：led�???
+ * Return:�???
  ************************************/
 void SetLedGreen(uint8_t state)
 {

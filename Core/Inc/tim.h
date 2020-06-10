@@ -31,6 +31,7 @@
 /* USER CODE END Includes */
 
 extern TIM_HandleTypeDef htim2;
+extern TIM_HandleTypeDef htim3;
 
 /* USER CODE BEGIN Private defines */
 #define DelayMs     HAL_Delay
@@ -39,6 +40,7 @@ typedef uint32_t   TickType_t;
 /* USER CODE END Private defines */
 
 void MX_TIM2_Init(void);
+void MX_TIM3_Init(void);
 
 /* USER CODE BEGIN Prototypes */
 void Delay100Us(uint32_t value);

@@ -22,8 +22,8 @@ enum KeyState
 	NONE = 0, PRESS, LONG_PRESS, RELEASE
 };
 
-#define UP  1
-#define DOWN 0
+#define UP  0
+#define DOWN 1
 #define BUTTON_MAX   8
 typedef struct HmiKey
 {
@@ -44,7 +44,6 @@ HmiKey_t volumeKey =
 HmiKey_t reserveKey =
 { 0 };
 
-static KeySave_t keySave;
 //#define KEY_SCAN_INTERVAL    20
 #define SHORT_PRESS_TICK  100
 #define LONG_PRESS_TICK  2000
@@ -78,7 +77,6 @@ uint8_t ReadRevBtn(void)
  ************************************/
 void AebCb(enum KeyState kSta)
 {
-	static aebCnt=0;
 	if (kSta == LONG_PRESS)
 	{
 		SetAebState(AEB_OFF);
@@ -254,7 +252,7 @@ void ScanOneKey(HmiKey_t *pKey)
 	{
 		if (pKey->pressTick != 0) //������¹�
 		{
-			if (GetSysticks() - pKey->pressTick > 2000) //�жϰ���ʱ���ﵽ�˳�����׼
+			if (GetSysticks() - pKey->pressTick > LONG_PRESS_TICK) //�жϰ���ʱ���ﵽ�˳�����׼
 			{
 				pKey->pressTick = GetSysticks();
 				pKey->keyState = LONG_PRESS;
