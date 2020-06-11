@@ -221,7 +221,7 @@ void SetCar(uint8_t state)
 	case 1:
 		led.carGreen = LED_CAR;
 		led.carRed = 0;
-				led.carYellow = 0;
+		led.carYellow = 0;
 		break;
 	case 2:
 		if (blinkflag.car != 2)
@@ -234,7 +234,7 @@ void SetCar(uint8_t state)
 	case 3:
 		led.carYellow = LED_CAR;
 		led.carGreen = 0;
-				led.carRed = 0;
+		led.carRed = 0;
 
 		break;
 	case 4:
@@ -242,13 +242,13 @@ void SetCar(uint8_t state)
 		{
 			led.carYellow = LED_CAR;
 			led.carGreen = 0;
-					led.carRed = 0;
+			led.carRed = 0;
 		}
 		break;
 	case 5:
 		led.carRed = LED_CAR;
 		led.carGreen = 0;
-				led.carYellow = 0;
+		led.carYellow = 0;
 		break;
 	case 6:
 		if (blinkflag.car != 6)
@@ -293,7 +293,7 @@ void SetPeople(uint8_t state)
 	case 3:
 		led.peopleYellow = LED_PEOPLE;
 		led.peopleGreen = 0;
-				led.peopleRed = 0;
+		led.peopleRed = 0;
 		break;
 	case 4:
 		if (blinkflag.people != 4)
@@ -306,7 +306,7 @@ void SetPeople(uint8_t state)
 	case 5:
 		led.peopleRed = LED_PEOPLE;
 		led.peopleGreen = 0;
-				led.peopleYellow = 0;
+		led.peopleYellow = 0;
 		break;
 	case 6:
 		if (blinkflag.people != 6)
@@ -319,7 +319,7 @@ void SetPeople(uint8_t state)
 	default:
 		break;
 	}
-	blinkflag.people=state;
+	blinkflag.people = state;
 }
 
 /***********************************
@@ -332,15 +332,15 @@ void SetPoint(uint8_t state)
 	switch (state)
 	{
 	case 0:
-		led.point=0;
+		led.point = 0;
 		break;
 	case 1:
-		led.point=LED_POINT;
+		led.point = LED_POINT;
 		break;
 	case 2:
 		if (blinkflag.point != 2)
 		{
-			led.point=LED_POINT;
+			led.point = LED_POINT;
 		}
 		break;
 	default:
@@ -359,32 +359,32 @@ void SetAeb(uint8_t state)
 	switch (state)
 	{
 	case 0:
-		led.aebStateGreen=0;
-		led.aebStateRed=0;
+		led.aebStateGreen = 0;
+		led.aebStateRed = 0;
 		break;
 	case 1:
-		led.aebStateGreen=LED_AEB_GREEN;
-		led.aebStateRed=0;
+		led.aebStateGreen = LED_AEB_GREEN;
+		led.aebStateRed = 0;
 		break;
 	case 2:
 		if (blinkflag.aebState != 2)
 		{
-			led.aebStateGreen=LED_AEB_GREEN;
-			led.aebStateRed=0;
+			led.aebStateGreen = LED_AEB_GREEN;
+			led.aebStateRed = 0;
 		}
 		break;
 	case 3:
-			led.aebStateRed=LED_AEB_RED;
-			led.aebStateGreen=0;
+		led.aebStateRed = LED_AEB_RED;
+		led.aebStateGreen = 0;
 
-			break;
-		case 4:
-			if (blinkflag.aebState != 4)
-			{
-				led.aebStateRed=LED_AEB_RED;
-				led.aebStateGreen=0;
-			}
-			break;
+		break;
+	case 4:
+		if (blinkflag.aebState != 4)
+		{
+			led.aebStateRed = LED_AEB_RED;
+			led.aebStateGreen = 0;
+		}
+		break;
 	default:
 		break;
 	}
@@ -400,15 +400,15 @@ void SetFault(uint8_t state)
 	switch (state)
 	{
 	case 0:
-		led.fault=0;
+		led.fault = 0;
 		break;
 	case 1:
-		led.fault=LED_FAULT;
+		led.fault = LED_FAULT;
 		break;
 	case 2:
 		if (blinkflag.fault != 2)
 		{
-			led.fault=LED_FAULT;
+			led.fault = LED_FAULT;
 		}
 		break;
 	default:
@@ -424,7 +424,7 @@ void SetFault(uint8_t state)
  ************************************/
 void SetDigitalNumLeft(uint8_t state)
 {
-	led.numLeft=numTab[state];
+	led.numLeft = numTab[state];
 }
 
 /***********************************
@@ -434,6 +434,6 @@ void SetDigitalNumLeft(uint8_t state)
  ************************************/
 void SetDigitalNumRight(uint8_t state)
 {
-	led.numRight=numTab[state];
+	led.numRight = numTab[state];
 }
 

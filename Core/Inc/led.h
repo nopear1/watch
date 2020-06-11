@@ -50,9 +50,15 @@ typedef struct LED_USED
 		uint8_t point;
 		uint8_t ledGreen;
 		uint8_t ledRed;
-		uint8_t numRight;
-		uint8_t numLeft;
+		uint8_t digitalState;
 }LedUsed_t;
+
+enum used
+{
+	USED_NONE,
+	USED_AEB,
+	USED_BSD
+};
 
 extern LedUsed_t ledUsed;
 extern LED_t led;

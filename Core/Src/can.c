@@ -1,21 +1,21 @@
 /**
-  ******************************************************************************
-  * File Name          : CAN.c
-  * Description        : This file provides code for the configuration
-  *                      of the CAN instances.
-  ******************************************************************************
-  * @attention
-  *
-  * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
-  * All rights reserved.</center></h2>
-  *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
-  *
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * File Name          : CAN.c
+ * Description        : This file provides code for the configuration
+ *                      of the CAN instances.
+ ******************************************************************************
+ * @attention
+ *
+ * <h2><center>&copy; Copyright (c) 2020 STMicroelectronics.
+ * All rights reserved.</center></h2>
+ *
+ * This software component is licensed by ST under BSD 3-Clause license,
+ * the "License"; You may not use this file except in compliance with the
+ * License. You may obtain a copy of the License at:
+ *                        opensource.org/licenses/BSD-3-Clause
+ *
+ ******************************************************************************
+ */
 
 /* Includes ------------------------------------------------------------------*/
 #include "can.h"
@@ -72,85 +72,85 @@ CAN_HandleTypeDef hcan;
 void MX_CAN_Init(void)
 {
 
-  hcan.Instance = CAN1;
-  hcan.Init.Prescaler = 4;
-  hcan.Init.Mode = CAN_MODE_NORMAL;
-  hcan.Init.SyncJumpWidth = CAN_SJW_1TQ;
-  hcan.Init.TimeSeg1 = CAN_BS1_9TQ;
-  hcan.Init.TimeSeg2 = CAN_BS2_8TQ;
-  hcan.Init.TimeTriggeredMode = DISABLE;
-  hcan.Init.AutoBusOff = DISABLE;
-  hcan.Init.AutoWakeUp = DISABLE;
-  hcan.Init.AutoRetransmission = DISABLE;
-  hcan.Init.ReceiveFifoLocked = DISABLE;
-  hcan.Init.TransmitFifoPriority = DISABLE;
-  if (HAL_CAN_Init(&hcan) != HAL_OK)
-  {
-    Error_Handler();
-  }
+	hcan.Instance = CAN1;
+	hcan.Init.Prescaler = 4;
+	hcan.Init.Mode = CAN_MODE_NORMAL;
+	hcan.Init.SyncJumpWidth = CAN_SJW_1TQ;
+	hcan.Init.TimeSeg1 = CAN_BS1_9TQ;
+	hcan.Init.TimeSeg2 = CAN_BS2_8TQ;
+	hcan.Init.TimeTriggeredMode = DISABLE;
+	hcan.Init.AutoBusOff = DISABLE;
+	hcan.Init.AutoWakeUp = DISABLE;
+	hcan.Init.AutoRetransmission = DISABLE;
+	hcan.Init.ReceiveFifoLocked = DISABLE;
+	hcan.Init.TransmitFifoPriority = DISABLE;
+	if (HAL_CAN_Init(&hcan) != HAL_OK)
+	{
+		Error_Handler();
+	}
 
 }
 
-void HAL_CAN_MspInit(CAN_HandleTypeDef* canHandle)
+void HAL_CAN_MspInit(CAN_HandleTypeDef *canHandle)
 {
 
-  GPIO_InitTypeDef GPIO_InitStruct = {0};
-  if(canHandle->Instance==CAN1)
-  {
-  /* USER CODE BEGIN CAN1_MspInit 0 */
+	GPIO_InitTypeDef GPIO_InitStruct = { 0 };
+	if (canHandle->Instance == CAN1)
+	{
+		/* USER CODE BEGIN CAN1_MspInit 0 */
 
-  /* USER CODE END CAN1_MspInit 0 */
-    /* CAN1 clock enable */
-    __HAL_RCC_CAN1_CLK_ENABLE();
-  
-    __HAL_RCC_GPIOA_CLK_ENABLE();
-    /**CAN GPIO Configuration    
-    PA11     ------> CAN_RX
-    PA12     ------> CAN_TX 
-    */
-    GPIO_InitStruct.Pin = GPIO_PIN_11;
-    GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+		/* USER CODE END CAN1_MspInit 0 */
+		/* CAN1 clock enable */
+		__HAL_RCC_CAN1_CLK_ENABLE();
 
-    GPIO_InitStruct.Pin = GPIO_PIN_12;
-    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+		__HAL_RCC_GPIOA_CLK_ENABLE();
+		/**CAN GPIO Configuration
+		 PA11     ------> CAN_RX
+		 PA12     ------> CAN_TX
+		 */
+		GPIO_InitStruct.Pin = GPIO_PIN_11;
+		GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+		GPIO_InitStruct.Pull = GPIO_NOPULL;
+		HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-    /* CAN1 interrupt Init */
-    HAL_NVIC_SetPriority(USB_LP_CAN1_RX0_IRQn, 3, 0);
-    HAL_NVIC_EnableIRQ(USB_LP_CAN1_RX0_IRQn);
-  /* USER CODE BEGIN CAN1_MspInit 1 */
+		GPIO_InitStruct.Pin = GPIO_PIN_12;
+		GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+		GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+		HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /* USER CODE END CAN1_MspInit 1 */
-  }
+		/* CAN1 interrupt Init */
+		HAL_NVIC_SetPriority(USB_LP_CAN1_RX0_IRQn, 3, 0);
+		HAL_NVIC_EnableIRQ(USB_LP_CAN1_RX0_IRQn);
+		/* USER CODE BEGIN CAN1_MspInit 1 */
+
+		/* USER CODE END CAN1_MspInit 1 */
+	}
 }
 
-void HAL_CAN_MspDeInit(CAN_HandleTypeDef* canHandle)
+void HAL_CAN_MspDeInit(CAN_HandleTypeDef *canHandle)
 {
 
-  if(canHandle->Instance==CAN1)
-  {
-  /* USER CODE BEGIN CAN1_MspDeInit 0 */
+	if (canHandle->Instance == CAN1)
+	{
+		/* USER CODE BEGIN CAN1_MspDeInit 0 */
 
-  /* USER CODE END CAN1_MspDeInit 0 */
-    /* Peripheral clock disable */
-    __HAL_RCC_CAN1_CLK_DISABLE();
-  
-    /**CAN GPIO Configuration    
-    PA11     ------> CAN_RX
-    PA12     ------> CAN_TX 
-    */
-    HAL_GPIO_DeInit(GPIOA, GPIO_PIN_11|GPIO_PIN_12);
+		/* USER CODE END CAN1_MspDeInit 0 */
+		/* Peripheral clock disable */
+		__HAL_RCC_CAN1_CLK_DISABLE();
 
-    /* CAN1 interrupt Deinit */
-    HAL_NVIC_DisableIRQ(USB_LP_CAN1_RX0_IRQn);
-  /* USER CODE BEGIN CAN1_MspDeInit 1 */
+		/**CAN GPIO Configuration
+		 PA11     ------> CAN_RX
+		 PA12     ------> CAN_TX
+		 */
+		HAL_GPIO_DeInit(GPIOA, GPIO_PIN_11 | GPIO_PIN_12);
 
-  /* USER CODE END CAN1_MspDeInit 1 */
-  }
-} 
+		/* CAN1 interrupt Deinit */
+		HAL_NVIC_DisableIRQ(USB_LP_CAN1_RX0_IRQn);
+		/* USER CODE BEGIN CAN1_MspDeInit 1 */
+
+		/* USER CODE END CAN1_MspDeInit 1 */
+	}
+}
 
 /* USER CODE BEGIN 1 */
 
@@ -310,33 +310,39 @@ void CanDataAnalisys(void)
 		/*如果是报警器*/
 		if (hardware == HW_ALARM)
 		{
-			/*点亮操作不受限制*/
-			if (aeb.ledRed != 0)
+			if (ledUsed.ledRed == USED_NONE)
 			{
-				SetLedRed(aeb.ledRed);
-			}
-			else
-			{
-				/*熄灭操作，需要确认bsd没有点亮的情况下去操�?????*/
-				if (bsd.ledRed == 0)
+				if (aeb.ledRed != 0)
 				{
 					SetLedRed(aeb.ledRed);
+					ledUsed.ledRed = USED_AEB;
 				}
 			}
-			/*点亮操作不受限制*/
-			if (aeb.ledGreen != 0)
+			else if (ledUsed.ledRed == USED_AEB)
 			{
-				SetLedGreen(aeb.ledGreen);
-			}
-			else
-			{
-				/*熄灭操作，需要确认bsd没有点亮的情况下去操�?????*/
-				if (bsd.ledGreen == 0)
+				if (aeb.ledRed == 0)
 				{
-					SetLedGreen(aeb.ledGreen);
+					SetLedRed(aeb.ledRed);
+					ledUsed.ledRed = USED_NONE;
 				}
 			}
 
+			if (ledUsed.ledGreen == USED_NONE)
+			{
+				if (aeb.ledGreen != 0)
+				{
+					SetLedGreen(aeb.ledGreen);
+					ledUsed.ledGreen = USED_AEB;
+				}
+			}
+			else if (ledUsed.ledGreen == USED_AEB)
+			{
+				if (aeb.ledGreen == 0)
+				{
+					SetLedGreen(aeb.ledGreen);
+					ledUsed.ledGreen = USED_NONE;
+				}
+			}
 		}
 		else if (hardware == HW_WATCH)
 		{
@@ -346,74 +352,99 @@ void CanDataAnalisys(void)
 			SetRightLine(aeb.rightLine);
 			/*解析aeb灯*/
 			SetAeb(aeb.aebState);
-			/*点亮操作不受限制*/
-			if (aeb.car != 0)
+			/*如果LED没被占用*/
+			if (ledUsed.car == USED_NONE)
 			{
-				SetCar(aeb.car);
-			}
-			else
-			{
-				/*熄灭操作，需要确认bsd没有点亮的情况下去操�?????*/
-				if (bsd.car == 0)
+				if (aeb.car != 0)
 				{
 					SetCar(aeb.car);
+					ledUsed.car = USED_AEB;
 				}
 			}
-			/*点亮操作不受限制*/
-						if (aeb.fault != 0)
-						{
-							SetFault(aeb.fault);
-						}
-						else
-						{
-							/*熄灭操作，需要确认bsd没有点亮的情况下去操�?????*/
-							if (bsd.fault == 0)
-							{
-								SetFault(aeb.fault);
-							}
-						}
-			/*点亮操作不受限制*/
-			if (aeb.people != 0)
+			else if (ledUsed.car == USED_AEB)
 			{
-				SetPeople(aeb.people);
-			}
-			else
-			{
-				/*熄灭操作，需要确认bsd没有点亮的情况下去操�?????*/
-				if (bsd.people == 0)
+				if (aeb.car == 0)
 				{
-					SetPeople(aeb.people);
-				}
-			}
-			/*点亮操作不受限制*/
-			if (aeb.point != 0)
-			{
-				SetPoint(aeb.point);
-			}
-			else
-			{
-				/*熄灭操作，需要确认bsd没有点亮的情况下去操�?????*/
-				if (bsd.point == 0)
-				{
-					SetPoint(aeb.point);
+					SetCar(aeb.car);
+					ledUsed.car = USED_NONE;
 				}
 			}
 
-			if (aeb.digitalState == 1)
+			/*如果LED没被占用*/
+			if (ledUsed.fault == USED_NONE)
 			{
-				SetDigitalNumLeft(aeb.numLeft);
-				SetDigitalNumRight(aeb.numRight);
+				if (aeb.fault != 0)
+				{
+					SetFault(aeb.fault);
+					ledUsed.fault = USED_AEB;
+				}
 			}
-			else
+			else if (ledUsed.fault == USED_AEB)
 			{
-				led.numLeft=0;
-				led.numRight=0;
+				if (aeb.fault == 0)
+				{
+					SetFault(aeb.fault);
+					ledUsed.fault = USED_NONE;
+				}
+			}
+
+			if (ledUsed.people == USED_NONE)
+			{
+				if (aeb.people != 0)
+				{
+					SetPeople(aeb.people);
+					ledUsed.people = USED_AEB;
+				}
+			}
+			else if (ledUsed.people == USED_AEB)
+			{
+				if (aeb.people == 0)
+				{
+					SetPeople(aeb.people);
+					ledUsed.people = USED_NONE;
+				}
+			}
+
+			if (ledUsed.point == USED_NONE)
+			{
+				if (aeb.point != 0)
+				{
+					SetPoint(aeb.point);
+					ledUsed.point = USED_AEB;
+				}
+			}
+			else if (ledUsed.point == USED_AEB)
+			{
+				if (aeb.point == 0)
+				{
+					SetPoint(aeb.point);
+					ledUsed.point = USED_NONE;
+				}
+			}
+
+			if (ledUsed.digitalState == USED_NONE)
+			{
+				if (aeb.digitalState != 0)
+				{
+					SetDigitalNumLeft(aeb.numLeft);
+					SetDigitalNumRight(aeb.numRight);
+					ledUsed.digitalState = USED_AEB;
+				}
+			}
+			else if (ledUsed.digitalState == USED_AEB)
+			{
+				if (aeb.digitalState == 0)
+				{
+					led.numLeft = 0;
+					led.numRight = 0;
+					ledUsed.digitalState = USED_NONE;
+				}
 			}
 		}
-		msg11e.flg =0;
+		msg11e.flg = 0;
 	}
 	/*如果收到BSD控制指令*/
-	 if (msg11b.flg == 1)
+	if (msg11b.flg == 1)
 	{
 		bsd = *(BsdMsg_t*) (msg11b.data);
 
@@ -428,51 +459,134 @@ void CanDataAnalisys(void)
 		/*如果是报警器*/
 		if (hardware == HW_ALARM)
 		{
-			/*如果没被aeb占用*/
-			if (aeb.ledRed == 0)
+			if (ledUsed.ledRed == USED_NONE)
 			{
-				SetLedRed(bsd.ledRed);
+				if (bsd.ledRed != 0)
+				{
+					SetLedRed(bsd.ledRed);
+					ledUsed.ledRed = USED_BSD;
+				}
 			}
-			if (aeb.ledGreen == 0)
+			else if (ledUsed.ledRed == USED_BSD)
 			{
-				SetLedGreen(bsd.ledGreen);
+				if (bsd.ledRed == 0)
+				{
+					SetLedRed(bsd.ledRed);
+					ledUsed.ledRed = USED_NONE;
+				}
 			}
+
+			if (ledUsed.ledGreen == USED_NONE)
+			{
+				if (bsd.ledGreen != 0)
+				{
+					SetLedGreen(bsd.ledGreen);
+					ledUsed.ledGreen = USED_BSD;
+				}
+			}
+			else if (ledUsed.ledGreen == USED_BSD)
+			{
+				if (bsd.ledGreen == 0)
+				{
+					SetLedGreen(bsd.ledGreen);
+					ledUsed.ledGreen = USED_NONE;
+				}
+			}
+
 		}
 		else if (hardware == HW_WATCH)
 		{
-			/*只有AEB没有操作，bsd才能操作该led*/
-			if (aeb.car == 0)
+			/*如果LED没被占用*/
+			if (ledUsed.car == USED_NONE)
 			{
-				SetCar(bsd.car);
-			}
-
-			if (aeb.fault == 0)
-						{
-				SetFault(bsd.fault);
-						}
-
-			if (aeb.people == 0)
-			{
-				SetPeople(bsd.people);
-			}
-
-			if (aeb.point == 0)
-			{
-				SetPoint(bsd.point);
-			}
-
-			if ((aeb.digitalState == 0) && (bsd.digitalState == 1))
-			{
-				SetDigitalNumLeft(bsd.numLeft);
-				SetDigitalNumRight(bsd.numRight);
-			}
-			else
+				if (bsd.car != 0)
 				{
-					led.numLeft=0;
-					led.numRight=0;
+					SetCar(bsd.car);
+					ledUsed.car = USED_BSD;
 				}
+			}
+			else if (ledUsed.car == USED_BSD)
+			{
+				if (bsd.car == 0)
+				{
+					SetCar(bsd.car);
+					ledUsed.car = USED_NONE;
+				}
+			}
+
+			/*如果LED没被占用*/
+			if (ledUsed.fault == USED_NONE)
+			{
+				if (bsd.fault != 0)
+				{
+					SetFault(bsd.fault);
+					ledUsed.fault = USED_BSD;
+				}
+			}
+			else if (ledUsed.fault == USED_BSD)
+			{
+				if (bsd.fault == 0)
+				{
+					SetFault(bsd.fault);
+					ledUsed.fault = USED_NONE;
+				}
+			}
+
+			if (ledUsed.people == USED_NONE)
+			{
+				if (bsd.people != 0)
+				{
+					SetPeople(bsd.people);
+					ledUsed.people = USED_BSD;
+				}
+			}
+			else if (ledUsed.people == USED_BSD)
+			{
+				if (bsd.people == 0)
+				{
+					SetPeople(bsd.people);
+					ledUsed.people = USED_NONE;
+				}
+			}
+
+			if (ledUsed.point == USED_NONE)
+			{
+				if (bsd.point != 0)
+				{
+					SetPoint(bsd.point);
+					ledUsed.point = USED_BSD;
+				}
+			}
+			else if (ledUsed.point == USED_BSD)
+			{
+				if (bsd.point == 0)
+				{
+					SetPoint(bsd.point);
+					ledUsed.point = USED_NONE;
+				}
+			}
+
+			if (ledUsed.digitalState == USED_NONE)
+			{
+				if (bsd.digitalState != 0)
+				{
+					SetDigitalNumLeft(bsd.numLeft);
+					SetDigitalNumRight(bsd.numRight);
+					ledUsed.digitalState = USED_BSD;
+				}
+			}
+			else if (ledUsed.digitalState == USED_BSD)
+			{
+				if (bsd.digitalState == 0)
+				{
+					led.numLeft = 0;
+					led.numRight = 0;
+					ledUsed.digitalState = USED_NONE;
+				}
+			}
+
 		}
-		msg11b.flg =0;
+		msg11b.flg = 0;
 	}
 
 }
