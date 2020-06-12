@@ -37,13 +37,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
  16 .debug_macro  00015b06  00000000  00000000  00039650  2**0
                   CONTENTS, READONLY, DEBUGGING
- 17 .debug_line   0000bbcf  00000000  00000000  0004f156  2**0
+ 17 .debug_line   0000bbcd  00000000  00000000  0004f156  2**0
                   CONTENTS, READONLY, DEBUGGING
- 18 .debug_str    000743b6  00000000  00000000  0005ad25  2**0
+ 18 .debug_str    000743b6  00000000  00000000  0005ad23  2**0
                   CONTENTS, READONLY, DEBUGGING
- 19 .comment      0000007b  00000000  00000000  000cf0db  2**0
+ 19 .comment      0000007b  00000000  00000000  000cf0d9  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  00003958  00000000  00000000  000cf158  2**2
+ 20 .debug_frame  00003958  00000000  00000000  000cf154  2**2
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -2146,8 +2146,8 @@ void MX_GPIO_Init(void)
 
 08000dcc <GetHardwareType>:
  * Brief:获取硬件类型
- * Argument:�???
- * Return:HW_ALARM�???  报警�???  HW_WATCH：watch
+ * Argument:�???
+ * Return:HW_ALARM�???  报警�???  HW_WATCH：watch
  ************************************/
 uint8_t GetHardwareType(void)
 {
@@ -2179,8 +2179,8 @@ uint8_t GetHardwareType(void)
 
 08000dec <SetLedRed>:
  * Brief:设置红色LED（报警器版）
- * Argument:state�???0：led�???  1：led�???  2：led�???
- * Return:�???
+ * Argument:state�???0：led�???  1：led�???  2：led�???
+ * Return:�???
  ************************************/
 void SetLedRed(uint8_t state)
 {
@@ -2253,8 +2253,8 @@ void SetLedRed(uint8_t state)
 
 08000e5c <SetLedGreen>:
  * Brief:设置绿色LED（报警器版）
- * Argument:state�???0：led�???  1：led�???  2：led�???
- * Return:�???
+ * Argument:state�???0：led�???  1：led�???  2：led�???
+ * Return:�???
  ************************************/
 void SetLedGreen(uint8_t state)
 {
@@ -2272,22 +2272,22 @@ void SetLedGreen(uint8_t state)
  8000e6e:	d010      	beq.n	8000e92 <SetLedGreen+0x36>
  8000e70:	2b00      	cmp	r3, #0
  8000e72:	d000      	beq.n	8000e76 <SetLedGreen+0x1a>
-//			{
-//				HAL_GPIO_TogglePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin);
-//			}
+				HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin,GPIO_PIN_RESET );
+			}
+
 			break;
 		default:
 			break;
  8000e74:	e01b      	b.n	8000eae <SetLedGreen+0x52>
-			HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin,GPIO_PIN_RESET );
- 8000e76:	2200      	movs	r2, #0
+			HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin,GPIO_PIN_SET );
+ 8000e76:	2201      	movs	r2, #1
  8000e78:	f44f 7180 	mov.w	r1, #256	; 0x100
  8000e7c:	4812      	ldr	r0, [pc, #72]	; (8000ec8 <SetLedGreen+0x6c>)
  8000e7e:	f002 fa8e 	bl	800339e <HAL_GPIO_WritePin>
 			break;
  8000e82:	e014      	b.n	8000eae <SetLedGreen+0x52>
-					HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin,GPIO_PIN_SET );
- 8000e84:	2201      	movs	r2, #1
+					HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin,GPIO_PIN_RESET );
+ 8000e84:	2200      	movs	r2, #0
  8000e86:	f44f 7180 	mov.w	r1, #256	; 0x100
  8000e8a:	480f      	ldr	r0, [pc, #60]	; (8000ec8 <SetLedGreen+0x6c>)
  8000e8c:	f002 fa87 	bl	800339e <HAL_GPIO_WritePin>
@@ -2300,8 +2300,8 @@ void SetLedGreen(uint8_t state)
  8000e9a:	b2db      	uxtb	r3, r3
  8000e9c:	2b20      	cmp	r3, #32
  8000e9e:	d005      	beq.n	8000eac <SetLedGreen+0x50>
-				HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin,GPIO_PIN_SET );
- 8000ea0:	2201      	movs	r2, #1
+				HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin,GPIO_PIN_RESET );
+ 8000ea0:	2200      	movs	r2, #0
  8000ea2:	f44f 7180 	mov.w	r1, #256	; 0x100
  8000ea6:	4808      	ldr	r0, [pc, #32]	; (8000ec8 <SetLedGreen+0x6c>)
  8000ea8:	f002 fa79 	bl	800339e <HAL_GPIO_WritePin>
@@ -2534,14 +2534,10 @@ void LedDisplay(uint8_t row, uint8_t code)
  8000fec:	4b31      	ldr	r3, [pc, #196]	; (80010b4 <LedDisplay+0x1e4>)
  8000fee:	2201      	movs	r2, #1
  8000ff0:	601a      	str	r2, [r3, #0]
-		HAL_Delay(LED_SCAN_INTERVAL);
- 8000ff2:	2001      	movs	r0, #1
- 8000ff4:	f001 f8c8 	bl	8002188 <HAL_Delay>
-//		}
-//		if (GetSysticks()%100==0)
-//		{
-//			LED_COM1 = 1;
-//		}
+//		HAL_Delay(LED_SCAN_INTERVAL);
+		Delay100Us(LED_SCAN_INTERVAL);
+ 8000ff2:	2005      	movs	r0, #5
+ 8000ff4:	f000 ffb4 	bl	8001f60 <Delay100Us>
 		LED_COM1 = 0;
  8000ff8:	4b2e      	ldr	r3, [pc, #184]	; (80010b4 <LedDisplay+0x1e4>)
  8000ffa:	2200      	movs	r2, #0
@@ -2553,9 +2549,10 @@ void LedDisplay(uint8_t row, uint8_t code)
  8001000:	4b2d      	ldr	r3, [pc, #180]	; (80010b8 <LedDisplay+0x1e8>)
  8001002:	2201      	movs	r2, #1
  8001004:	601a      	str	r2, [r3, #0]
-		HAL_Delay(LED_SCAN_INTERVAL);
- 8001006:	2001      	movs	r0, #1
- 8001008:	f001 f8be 	bl	8002188 <HAL_Delay>
+//		HAL_Delay(LED_SCAN_INTERVAL);
+		Delay100Us(LED_SCAN_INTERVAL);
+ 8001006:	2005      	movs	r0, #5
+ 8001008:	f000 ffaa 	bl	8001f60 <Delay100Us>
 		LED_COM2 = 0;
  800100c:	4b2a      	ldr	r3, [pc, #168]	; (80010b8 <LedDisplay+0x1e8>)
  800100e:	2200      	movs	r2, #0
@@ -2567,9 +2564,10 @@ void LedDisplay(uint8_t row, uint8_t code)
  8001014:	4b29      	ldr	r3, [pc, #164]	; (80010bc <LedDisplay+0x1ec>)
  8001016:	2201      	movs	r2, #1
  8001018:	601a      	str	r2, [r3, #0]
-		HAL_Delay(LED_SCAN_INTERVAL);
- 800101a:	2001      	movs	r0, #1
- 800101c:	f001 f8b4 	bl	8002188 <HAL_Delay>
+//		HAL_Delay(LED_SCAN_INTERVAL);
+		Delay100Us(LED_SCAN_INTERVAL);
+ 800101a:	2005      	movs	r0, #5
+ 800101c:	f000 ffa0 	bl	8001f60 <Delay100Us>
 		LED_COM3 = 0;
  8001020:	4b26      	ldr	r3, [pc, #152]	; (80010bc <LedDisplay+0x1ec>)
  8001022:	2200      	movs	r2, #0
@@ -2581,9 +2579,10 @@ void LedDisplay(uint8_t row, uint8_t code)
  8001028:	4b25      	ldr	r3, [pc, #148]	; (80010c0 <LedDisplay+0x1f0>)
  800102a:	2201      	movs	r2, #1
  800102c:	601a      	str	r2, [r3, #0]
-		HAL_Delay(LED_SCAN_INTERVAL);
- 800102e:	2001      	movs	r0, #1
- 8001030:	f001 f8aa 	bl	8002188 <HAL_Delay>
+//		HAL_Delay(LED_SCAN_INTERVAL);
+		Delay100Us(LED_SCAN_INTERVAL);
+ 800102e:	2005      	movs	r0, #5
+ 8001030:	f000 ff96 	bl	8001f60 <Delay100Us>
 		LED_COM4 = 0;
  8001034:	4b22      	ldr	r3, [pc, #136]	; (80010c0 <LedDisplay+0x1f0>)
  8001036:	2200      	movs	r2, #0
@@ -2595,9 +2594,10 @@ void LedDisplay(uint8_t row, uint8_t code)
  800103c:	4b21      	ldr	r3, [pc, #132]	; (80010c4 <LedDisplay+0x1f4>)
  800103e:	2201      	movs	r2, #1
  8001040:	601a      	str	r2, [r3, #0]
-		HAL_Delay(LED_SCAN_INTERVAL);
- 8001042:	2001      	movs	r0, #1
- 8001044:	f001 f8a0 	bl	8002188 <HAL_Delay>
+//		HAL_Delay(LED_SCAN_INTERVAL);
+		Delay100Us(LED_SCAN_INTERVAL);
+ 8001042:	2005      	movs	r0, #5
+ 8001044:	f000 ff8c 	bl	8001f60 <Delay100Us>
 		LED_COM5 = 0;
  8001048:	4b1e      	ldr	r3, [pc, #120]	; (80010c4 <LedDisplay+0x1f4>)
  800104a:	2200      	movs	r2, #0
@@ -2609,9 +2609,10 @@ void LedDisplay(uint8_t row, uint8_t code)
  8001050:	4b1d      	ldr	r3, [pc, #116]	; (80010c8 <LedDisplay+0x1f8>)
  8001052:	2201      	movs	r2, #1
  8001054:	601a      	str	r2, [r3, #0]
-		HAL_Delay(LED_SCAN_INTERVAL);
- 8001056:	2001      	movs	r0, #1
- 8001058:	f001 f896 	bl	8002188 <HAL_Delay>
+//		HAL_Delay(LED_SCAN_INTERVAL);
+		Delay100Us(LED_SCAN_INTERVAL);
+ 8001056:	2005      	movs	r0, #5
+ 8001058:	f000 ff82 	bl	8001f60 <Delay100Us>
 		LED_COM6 = 0;
  800105c:	4b1a      	ldr	r3, [pc, #104]	; (80010c8 <LedDisplay+0x1f8>)
  800105e:	2200      	movs	r2, #0
@@ -2623,9 +2624,10 @@ void LedDisplay(uint8_t row, uint8_t code)
  8001064:	4b19      	ldr	r3, [pc, #100]	; (80010cc <LedDisplay+0x1fc>)
  8001066:	2201      	movs	r2, #1
  8001068:	601a      	str	r2, [r3, #0]
-		HAL_Delay(LED_SCAN_INTERVAL);
- 800106a:	2001      	movs	r0, #1
- 800106c:	f001 f88c 	bl	8002188 <HAL_Delay>
+//		HAL_Delay(LED_SCAN_INTERVAL);
+		Delay100Us(LED_SCAN_INTERVAL);
+ 800106a:	2005      	movs	r0, #5
+ 800106c:	f000 ff78 	bl	8001f60 <Delay100Us>
 		LED_COM7 = 0;
  8001070:	4b16      	ldr	r3, [pc, #88]	; (80010cc <LedDisplay+0x1fc>)
  8001072:	2200      	movs	r2, #0
@@ -2637,9 +2639,10 @@ void LedDisplay(uint8_t row, uint8_t code)
  8001078:	4b15      	ldr	r3, [pc, #84]	; (80010d0 <LedDisplay+0x200>)
  800107a:	2201      	movs	r2, #1
  800107c:	601a      	str	r2, [r3, #0]
-		HAL_Delay(LED_SCAN_INTERVAL);
- 800107e:	2001      	movs	r0, #1
- 8001080:	f001 f882 	bl	8002188 <HAL_Delay>
+//		HAL_Delay(LED_SCAN_INTERVAL);
+		Delay100Us(LED_SCAN_INTERVAL);
+ 800107e:	2005      	movs	r0, #5
+ 8001080:	f000 ff6e 	bl	8001f60 <Delay100Us>
 		LED_COM8 = 0;
  8001084:	4b12      	ldr	r3, [pc, #72]	; (80010d0 <LedDisplay+0x200>)
  8001086:	2200      	movs	r2, #0
@@ -3516,7 +3519,7 @@ void AlarmKeyScan(void)
 {
  80015a4:	b580      	push	{r7, lr}
  80015a6:	af00      	add	r7, sp, #0
-	/*按键切换状�??*/
+	/*按键切换状态*/
 	if (PAin(6) == latchSta)
  80015a8:	4b24      	ldr	r3, [pc, #144]	; (800163c <AlarmKeyScan+0x98>)
  80015aa:	681a      	ldr	r2, [r3, #0]
@@ -3557,7 +3560,7 @@ void AlarmKeyScan(void)
  80015e8:	3301      	adds	r3, #1
  80015ea:	4a17      	ldr	r2, [pc, #92]	; (8001648 <AlarmKeyScan+0xa4>)
  80015ec:	6013      	str	r3, [r2, #0]
-		/*按六次音量调�??*/
+		/*按六次音量调节*/
 		if ((keyCnt % 6 == 0) && (keyCnt != 0))
  80015ee:	4b16      	ldr	r3, [pc, #88]	; (8001648 <AlarmKeyScan+0xa4>)
  80015f0:	6819      	ldr	r1, [r3, #0]
@@ -3658,8 +3661,7 @@ int main(void)
 	KeyInit();
  8001684:	f7fe fdd6 	bl	8000234 <KeyInit>
 
-	/*第一次播�???? �????活，但不出声*/
-
+	/*第一次播，但不出声*/
 //	PlayVoice(SP_WELCOME);
 	HAL_Delay(200);
  8001688:	20c8      	movs	r0, #200	; 0xc8

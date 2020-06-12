@@ -4,7 +4,7 @@
 /**
  *row:Ҫ������������code Ҫ��ʾ���룬8λ�����λĬ��Ϊ0�� ����ÿλ����led�����һ��7��led��Ϊ1ʱ������
  */
-#define LED_SCAN_INTERVAL   1
+#define LED_SCAN_INTERVAL   5
 BlinkFlag_t blinkflag;
 LedUsed_t ledUsed;
 uint32_t ledTick = 0;
@@ -86,51 +86,50 @@ void LedDisplay(uint8_t row, uint8_t code)
 	{
 	case 1:
 		LED_COM1 = 1;
-		HAL_Delay(LED_SCAN_INTERVAL);
-//		if(GetSysticks()-ledTick>=LED_SCAN_INTERVAL)
-//		{
-//			ledTick=GetSysticks();
-//			LED_COM1 = 0;
-//		}
-//		if (GetSysticks()%100==0)
-//		{
-//			LED_COM1 = 1;
-//		}
+//		HAL_Delay(LED_SCAN_INTERVAL);
+		Delay100Us(LED_SCAN_INTERVAL);
 		LED_COM1 = 0;
 		break;
 	case 2:
 		LED_COM2 = 1;
-		HAL_Delay(LED_SCAN_INTERVAL);
+//		HAL_Delay(LED_SCAN_INTERVAL);
+		Delay100Us(LED_SCAN_INTERVAL);
 		LED_COM2 = 0;
 		break;
 	case 3:
 		LED_COM3 = 1;
-		HAL_Delay(LED_SCAN_INTERVAL);
+//		HAL_Delay(LED_SCAN_INTERVAL);
+		Delay100Us(LED_SCAN_INTERVAL);
 		LED_COM3 = 0;
 		break;
 	case 4:
 		LED_COM4 = 1;
-		HAL_Delay(LED_SCAN_INTERVAL);
+//		HAL_Delay(LED_SCAN_INTERVAL);
+		Delay100Us(LED_SCAN_INTERVAL);
 		LED_COM4 = 0;
 		break;
 	case 5:
 		LED_COM5 = 1;
-		HAL_Delay(LED_SCAN_INTERVAL);
+//		HAL_Delay(LED_SCAN_INTERVAL);
+		Delay100Us(LED_SCAN_INTERVAL);
 		LED_COM5 = 0;
 		break;
 	case 6:
 		LED_COM6 = 1;
-		HAL_Delay(LED_SCAN_INTERVAL);
+//		HAL_Delay(LED_SCAN_INTERVAL);
+		Delay100Us(LED_SCAN_INTERVAL);
 		LED_COM6 = 0;
 		break;
 	case 7:
 		LED_COM7 = 1;
-		HAL_Delay(LED_SCAN_INTERVAL);
+//		HAL_Delay(LED_SCAN_INTERVAL);
+		Delay100Us(LED_SCAN_INTERVAL);
 		LED_COM7 = 0;
 		break;
 	case 8:
 		LED_COM8 = 1;
-		HAL_Delay(LED_SCAN_INTERVAL);
+//		HAL_Delay(LED_SCAN_INTERVAL);
+		Delay100Us(LED_SCAN_INTERVAL);
 		LED_COM8 = 0;
 		break;
 	}

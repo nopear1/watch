@@ -103,8 +103,8 @@ void MX_GPIO_Init(void)
 
 /***********************************
  * Brief:获取硬件类型
- * Argument:�???
- * Return:HW_ALARM�???  报警�???  HW_WATCH：watch
+ * Argument:�???
+ * Return:HW_ALARM�???  报警�???  HW_WATCH：watch
  ************************************/
 uint8_t GetHardwareType(void)
 {
@@ -124,8 +124,8 @@ uint8_t GetHardwareType(void)
 
 /***********************************
  * Brief:设置红色LED（报警器版）
- * Argument:state�???0：led�???  1：led�???  2：led�???
- * Return:�???
+ * Argument:state�???0：led�???  1：led�???  2：led�???
+ * Return:�???
  ************************************/
 void SetLedRed(uint8_t state)
 {
@@ -152,29 +152,27 @@ void SetLedRed(uint8_t state)
 
 /***********************************
  * Brief:设置绿色LED（报警器版）
- * Argument:state�???0：led�???  1：led�???  2：led�???
- * Return:�???
+ * Argument:state�???0：led�???  1：led�???  2：led�???
+ * Return:�???
  ************************************/
 void SetLedGreen(uint8_t state)
 {
 
 	switch (state) {
 		case 0:
-			HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin,GPIO_PIN_RESET );
+			HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin,GPIO_PIN_SET );
 			break;
 		case 1:
-					HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin,GPIO_PIN_SET );
+
+					HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin,GPIO_PIN_RESET );
 					break;
 		case 2:
 			if(blinkflag.ledGreen!=2)
 			{
-				HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin,GPIO_PIN_SET );
+//				HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin,GPIO_PIN_SET );
+				HAL_GPIO_WritePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin,GPIO_PIN_RESET );
 			}
-//			blinkflag.ledGreen=2;
-//			if(GetSysticks()%500==0)
-//			{
-//				HAL_GPIO_TogglePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin);
-//			}
+
 			break;
 		default:
 			break;

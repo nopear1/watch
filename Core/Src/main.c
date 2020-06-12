@@ -74,7 +74,7 @@ void SystemClock_Config(void);
 
 void AlarmKeyScan(void)
 {
-	/*按键切换状�??*/
+	/*按键切换状态*/
 	if (PAin(6) == latchSta)
 	{
 		latchSta = !PAin(6);
@@ -82,7 +82,7 @@ void AlarmKeyScan(void)
 		SetAebState(keyCnt % 2);
 
 		keyCnt++;
-		/*按六次音量调�??*/
+		/*按六次音量调节*/
 		if ((keyCnt % 6 == 0) && (keyCnt != 0))
 		{
 			volCnt++;
@@ -157,8 +157,7 @@ int main(void)
 	HAL_TIM_Base_Start_IT(&htim3);
 	KeyInit();
 
-	/*第一次播�???? �????活，但不出声*/
-
+	/*第一次播，但不出声*/
 //	PlayVoice(SP_WELCOME);
 	HAL_Delay(200);
 	PlayVoice(SP_WELCOME);
